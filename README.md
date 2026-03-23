@@ -62,6 +62,43 @@ Before cleaning, the following checks were performed:
 | Quantity range | 1 – 8 units |
 
 
+## Data Cleaning & Transformation
+The following transformations were applied in Databricks SQL:
+
+**1. Fixed date format**
+Converted `transaction_date` from raw text to a readable date format `dd MMMM yyyy`.
+
+**2. Fixed time format**
+Converted `transaction_time` to 12-hour format with AM/PM.
+
+**3. Created `total_sales`**
+```sql
+ROUND(unit_price * transaction_qty, 2) AS total_sales
+```
+
+**4. Extracted `month` and `month_name`**
+```sql
+MONTH(TO_DATE(transaction_date, 'yyyy/MM/dd')) AS month,
+DATE_FORMAT(TO_DATE(transaction_date, 'yyyy/MM/dd'), 'MMM') AS month_name
+```
+
+**5. Extracted `day_of_week`**
+```sql
+DATE_FORMAT(TO_DATE(transaction_date, 'yyyy/MM/dd'), 'EEEE') AS day_of_week
+```
+
+**6. Created `time_of_day` buckets**
+```sql
+CASE
+    WHEN HOUR(TO_TIMESTAMP(transaction_time, 'HH:mm:ss')) BETWEEN 6  AND 11 THEN 'Morning'
+    WHEN HOUR(TO_TIMESTAMP(transaction_time, 'HH:mm:ss')) BETWEEN 12 AND 16 THEN 'Afternoon'
+    WHEN HOUR(TO_TIMESTAMP(transaction_time, 'HH:mm:ss')) BETWEEN 17 AND 20 THEN 'Evening'
+    ELSE 'Night'
+END AS time_of_day
+```
+
+---
+
 ## Key Findings
 *To be updated after analysis is complete.*
 
