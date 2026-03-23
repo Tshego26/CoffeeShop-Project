@@ -1,10 +1,10 @@
---Check if data is uploaded correctly
 SELECT *
 FROM dbo.coffee
 LIMIT 3;
 
 --Check datatypes
 DESCRIBE `workspace`.`dbo`.`coffee`;
+
 
 --Check price range
 SELECT MAX(unit_price)
@@ -92,11 +92,35 @@ FROM dbo.coffee;
 SELECT DISTINCT product_type
 FROM dbo.coffee;
 
-
 --Conclusion- All categorical colummns are standardised. 
 
---Next Step: Transformation: Create new columns that will assist us in our analysis, the store opens at 6am and closes at 9pm
+--Next Step: Convert the date and group the time 
 
+-- Convert transaction_date from raw text to a readable date format dd MMMM yyyy
+SELECT
+    transaction_date,
+    DATE_FORMAT(TO_DATE(transaction_date, 'yyyy/MM/dd'), 'dd MMMM yyyy') AS transaction_date_formatted
+FROM `workspace`.`dbo`.`coffee`
+LIMIT 10;
+
+--Convert transaction_time to 12-hour format with AM/PM.
+SELECT
+    transaction_time,
+DATE_FORMAT(TO_TIMESTAMP(transaction_time, 'HH:mm:ss'), 'hh:mm:ss a')   AS transaction_time
+FROM `workspace`.`dbo`.`coffee`
+LIMIT 10;
+
+--Create time_of_day buckets
+SELECT
+CASE
+        WHEN HOUR(TO_TIMESTAMP(transaction_time, 'HH:mm:ss')) BETWEEN 6  AND 11 THEN 'Morning'
+        WHEN HOUR(TO_TIMESTAMP(transaction_time, 'HH:mm:ss')) BETWEEN 12 AND 16 THEN 'Afternoon'
+        WHEN HOUR(TO_TIMESTAMP(transaction_time, 'HH:mm:ss')) BETWEEN 17 AND 20 THEN 'Evening'
+        ELSE 'Night'
+    END   AS time_of_day
+FROM `workspace`.`dbo`.`coffee`;
+
+--Transformation: Create new columns that will assist us in our analysis, the store opens at 6am and closes at 9pm
 SELECT
     transaction_id,
     DATE_FORMAT(TO_DATE(transaction_date, 'yyyy/MM/dd'), 'dd MMMM yyyy')    AS transaction_date,
@@ -119,14 +143,4 @@ SELECT
         WHEN HOUR(TO_TIMESTAMP(transaction_time, 'HH:mm:ss')) BETWEEN 17 AND 20 THEN 'Evening'
         ELSE 'Night'
     END   AS time_of_day
-FROM `workspace`.`dbo`.`coffee`
-
-
-
-
-
-
-
-
-
-
+FROM `workspace`.`dbo`.`coffee`;
