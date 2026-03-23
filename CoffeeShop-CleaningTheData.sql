@@ -1,3 +1,4 @@
+--Check if data is uploaded correctly
 SELECT *
 FROM dbo.coffee
 LIMIT 3;
