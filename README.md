@@ -23,7 +23,7 @@ This analysis answers the following business questions:
 - **Period:** January 2023 – June 2023
 - **Stores:** Lower Manhattan · Hell's Kitchen · Astoria
 - **Records:** 149,116 transactions
-- **Columns:** 11 raw columns → 16 after transformation
+- **Columns:** 11 raw columns → 15 after transformation
 
   ### Raw Columns
 | Column | Data Type | Description |
