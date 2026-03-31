@@ -81,12 +81,12 @@ ROUND(SUM(transaction_qty * unit_price), 2) AS total_revenue,
  MONTH(transaction_date)                 AS month_number,
 ```
 
-**5. Extracted `day_of_week`**
+**3. Extracted `day_of_week`**
 ```sql
 DAYNAME(transaction_date)   AS day_name,
 ```
 
-**6. Created `time_of_day` buckets**
+**4. Created `time_of_day` buckets**
 ```sql
  HOUR(transaction_time)                  AS hour_of_day,
     CASE 
@@ -104,7 +104,7 @@ CASE
     END AS day_type,
 ```
 
-**5. Extracted `Spending categories`**
+**6. Extracted `Spending categories`**
 ```sql
 CASE
     WHEN (transaction_qty * unit_price) >= 20   THEN 'High Spender'
