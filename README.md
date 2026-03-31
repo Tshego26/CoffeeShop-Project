@@ -1,4 +1,4 @@
-# ☕ Bright Coffee Shop — Sales Analysis Project
+# ☕Coffee Shop — Sales Analysis 
 
 ## Project Overview
 An end-to-end data analysis project analysing 6 months of transactional sales data from Bright Coffee Shop, a chain with 3 branches. The goal is to uncover insights that can help improve sales performance across stores, products, and time periods.
@@ -104,7 +104,7 @@ CASE
     END AS day_type,
 ```
 
-**5. Extracted `Spening categories`**
+**5. Extracted `Spending categories`**
 ```sql
 CASE
     WHEN (transaction_qty * unit_price) >= 20   THEN 'High Spender'
@@ -153,7 +153,7 @@ END AS spend_category
 > Revenue grew consistently every month, nearly doubling from February to June. April–June is the peak season.
 
 
-## Dashboard and Pivot Tables
+## Dashboard and Pivot Tables (Analysis)
 * Microsoft Excel dashboard*
 <img width="3362" height="1503" alt="image" src="https://github.com/user-attachments/assets/4bcd631c-b7da-42b5-a4a8-7c63236be710" />
 
