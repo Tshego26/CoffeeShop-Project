@@ -1,4 +1,4 @@
-# ☕ Bright Coffee Shop — Sales Analysis Project
+# ☕Coffee Shop — Sales Analysis 
 
 ## Project Overview
 An end-to-end data analysis project analysing 6 months of transactional sales data from Bright Coffee Shop, a chain with 3 branches. The goal is to uncover insights that can help improve sales performance across stores, products, and time periods.
@@ -41,12 +41,17 @@ This analysis answers the following business questions:
 | product_detail | string | Full product name and size |
 
 ## Tools Used
+
+| Tool | Purpose |
+|---|---|
 | Microsoft Excel | Quick data validation checks |
-| Miro | project planning and brainstorming |
+| Miro | Project planning and brainstorming |
 | Databricks (SQL) | Data cleaning and transformation |
-| Canva | Project phase Update  |
+| Canva | Project phase updates |
 | Microsoft Excel | Data visualisation and dashboard |
-| Microsoft PowerPoint | Project Presentation |
+| Canva| Project Presentation |
+
+---
 
 
 ## Data Inspection Summary
@@ -91,7 +96,22 @@ DAYNAME(transaction_date)   AS day_name,
     ELSE 'off_peak'
     END AS time_of_day,
 ```
+**5. Extracted `day type`**
+```sql
+CASE
+    WHEN day_name IN('Sun', 'Sat') THEN 'Weekend'
+    ELSE   'Weekday'
+    END AS day_type,
+```
 
+**5. Extracted `Spending categories`**
+```sql
+CASE
+    WHEN (transaction_qty * unit_price) >= 20   THEN 'High Spender'
+    WHEN (transaction_qty * unit_price) >= 4.69 THEN 'Mid Spender'
+    ELSE                                             'Low Spender'
+END AS spend_category
+```
 ---
 
 ## Key Findings
@@ -132,9 +152,24 @@ DAYNAME(transaction_date)   AS day_name,
 
 > Revenue grew consistently every month, nearly doubling from February to June. April–June is the peak season.
 
+---
+
+## Overall Findings
+
+Bright Coffee Shop generated R698,812 in total revenue across 149,116 transactions between January and June 2023, with an average order value of R4.69. Revenue grew consistently every month, nearly doubling from R76,145 in February to R166,485 in June, suggesting strong seasonal demand heading into summer.
+
+Hell's Kitchen was the top performing store at R236,511 in revenue, leading consistently across all 6 months. Lower Manhattan presented the most interesting pattern, fewest customers walking in but the highest units sold per visit, indicating a loyal, high-frequency buying customer base.
+
+Coffee dominated as the top revenue category at R269,952, accounting for 39% of total revenue, with Tea a distant second at R196,405. Coffee Beans emerged as a premium segment with the highest average order value at R22.63 per order, while Flavours raised a pricing concern, generating only R1.24 per item despite high sales volume.
+
+Morning was the peak trading period across all stores, generating R388,288 more than the afternoon and evening combined. Monday and Friday were the strongest days while Saturday consistently underperformed, pointing to a predominantly weekday commuter customer base.
+
+From a spend behaviour perspective, Mid Spenders drove the most revenue at R388,094 despite being outnumbered by Low Spenders who made up 60.8% of all transactions. High Spenders represented only 0.7% of customers but contributed R31,170, making them the most valuable segment per visit.
+
+---
 
 ## Dashboard
-* Microsoft Excel dashboard to be added after visualisation step is complete.*
+Microsoft Excel dashboard completed with 5 analytical sheets and one summary dashboard covering store performance, category insights, time and day analysis, and spend category behaviour.
 
 ---
 
@@ -145,5 +180,5 @@ Data Analyst | South Africa
 ---
 
 ## Status
-🟡 In Progress — Currently at Step 4: Analysis
+🟡 Completed
 
